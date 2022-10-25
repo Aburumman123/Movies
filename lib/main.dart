@@ -9,8 +9,6 @@ import 'package:movies/screens/widgets.dart';
 import 'package:movies/theme/theme_state.dart';
 import 'package:provider/provider.dart';
 
-import 'modal_class/languages.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -19,7 +17,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeState()),
       ],
-      child: const lang(),
+      child: const Lang(),
     ),
   );
 }
@@ -93,30 +91,31 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class lang extends StatefulWidget {
-  const lang({Key? key}) : super(key: key);
+class Lang extends StatefulWidget {
+  const Lang({Key? key}) : super(key: key);
 
   @override
-  State<lang> createState() => _langState();
+  State<Lang> createState() => _LangState();
 }
 
-class _langState extends State<lang> {
+class _LangState extends State<Lang> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Movie😍',
-      locale: context.locale,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'), // English, no country code
+        Locale('ar', 'SA'), // Spanish, no country code
+      ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.blue, canvasColor: Colors.transparent),
-      home: EasyLocalization(
-          supportedLocales: [Locale('en', 'US'), Locale('ar', 'SA')],
-          path:
-              'assets/translations', // <-- change the path of the translation files
-          fallbackLocale: const Locale('en', 'US'),
-          child: const MyHomePage()),
+      home: const MyHomePage(),
     );
   }
 }

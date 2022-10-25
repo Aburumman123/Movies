@@ -30,6 +30,6 @@ class Endpoints {
 
   static String movieReviewsUrl(int movieId, int page) {
     return '$TMDB_API_BASE_URL/movie/$movieId/reviews?api_key=$TMDB_API_KEY'
-        '&language=ar-SAS&page=$page';
+        '&language=ar-SA&page=$page';
   }
 }
